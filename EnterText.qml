@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 Item {
     property string property_defaultText
+    property string text: textInput.text
 
     Rectangle {
         id: textInput_Rectangle

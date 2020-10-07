@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include "appengine.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +17,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    engine.rootContext()->setContextProperty("account_login", "mfedyarov");
+    AppEngine appEngine;
+
+    engine.rootContext()->setContextProperty("app", &appEngine);
 
     engine.load(url);
 

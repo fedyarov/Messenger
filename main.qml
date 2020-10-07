@@ -8,6 +8,18 @@ Window {
     height: 900
     title: qsTr("Messenger")
 
+    Connections{
+        target: app
+        onLoginResult: {
+            onLogin();
+        }
+    }
+
+    function onLogin() {
+        main_item.state = "State2"
+        authorization.state = "State2"
+    }
+
     Item {
         id: main_item
         anchors.top: parent.top
@@ -92,9 +104,8 @@ Window {
         anchors.left: parent.left
         width: parent.width
 
-        onAuthButtonClicked: {
-            main_item.state = "State2"
-            authorization.state = "State2"
+        onLoginButtonClicked: {
+            app.login(username, password)
         }
     }
 }

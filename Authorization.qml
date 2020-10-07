@@ -3,7 +3,7 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     id: authorization
-    signal authButtonClicked()
+    signal loginButtonClicked(string username, string password)
 
     color: "#dedede"
     state: "State1"
@@ -29,7 +29,7 @@ Rectangle {
         }
 
         EnterText {
-           id: login
+           id: username_EnterText
            anchors.top: welcome_Text.bottom
            anchors.left: parent.left
            anchors.right: parent.right
@@ -38,11 +38,11 @@ Rectangle {
            anchors.rightMargin: 50
            height: 50
 
-           property_defaultText: account_login
+           property_defaultText: "Имя аккаунта"
         }
         EnterText {
-           id: password
-           anchors.top: login.bottom
+           id: password_EnterText
+           anchors.top: username_EnterText.bottom
            anchors.left: parent.left
            anchors.right: parent.right
            anchors.topMargin: 40
@@ -54,14 +54,14 @@ Rectangle {
         }
         Button {
             id: auth_button
-            anchors.top: password.bottom
+            anchors.top: password_EnterText.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 50
             height: 50
             text: "Войти"
 
             onClicked: {
-                authorization.authButtonClicked()
+                authorization.loginButtonClicked(username_EnterText.text, password_EnterText.text)
             }
         }
     }
