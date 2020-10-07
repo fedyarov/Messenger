@@ -3,5 +3,8 @@
         <file>main.qml</file>
         <file>ToolBar.qml</file>
         <file>IconButton.qml</file>
+        <file>Menu.qml</file>
+        <file>Authorization.qml</file>
+        <file>EnterText.qml</file>
     </qresource>
 </RCC>
