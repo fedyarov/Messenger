@@ -3,6 +3,7 @@ import QtQuick 2.0
 Item {
     property string property_defaultText
     property string text: textInput.text
+    property int    property_maxLength: 300
 
     Rectangle {
         id: textInput_Rectangle
@@ -23,6 +24,8 @@ Item {
            anchors.leftMargin: 20
            anchors.rightMargin: 20
            font.pointSize: 10
+
+           maximumLength: property_maxLength
         }
     }
 

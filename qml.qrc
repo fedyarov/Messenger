@@ -7,5 +7,6 @@
         <file>Authorization.qml</file>
         <file>EnterText.qml</file>
         <file>TextButton.qml</file>
+        <file>Registration.qml</file>
     </qresource>
 </RCC>

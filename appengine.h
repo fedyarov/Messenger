@@ -20,6 +20,7 @@ public:
     void     set_username(const QString &a);
 
     Q_INVOKABLE void login(QString name, QString pass);
+    Q_INVOKABLE void registration(QString name, QString pass, QString checkPass);
 public slots:
 
 
@@ -27,6 +28,11 @@ signals:
     void loginResult();
     void loginConnectionError();
     void loginPasswordError();
+
+    void regResult();
+    void regConnectionError();
+    void regPasswordError();
+    void regUsernameError();
 
     void username_changed();
 };

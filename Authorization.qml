@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 Rectangle {
     id: authorization
     signal loginButtonClicked(string username, string password)
+    signal registrationButtonClicked()
     property string property_message;
 
     color: "#dedede"
@@ -40,6 +41,7 @@ Rectangle {
            height: 50
 
            property_defaultText: "Имя аккаунта"
+           property_maxLength: 16
            //text: "mfedyarov"
         }
 
@@ -99,6 +101,10 @@ Rectangle {
             height: 30
 
             text: "Зарегистрироваться"
+
+            onButtClicked: {
+                authorization.registrationButtonClicked()
+            }
         }
     }
 
@@ -116,7 +122,15 @@ Rectangle {
                 target: authorization
                 anchors.leftMargin: parent.width
             }
+        },
+        State {
+            name: "State3"
+            PropertyChanges {
+                target: authorization
+                anchors.leftMargin: -parent.width
+            }
         }
+
     ]
     transitions: [
         Transition {

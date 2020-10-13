@@ -3,11 +3,14 @@
 
 #include <QObject>
 #include <QDebug>
+
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlTableModel>
 #include <QSqlError>
 #include <QSqlRecord>
+
+#include <QCryptographicHash>
 
 class Server : public QObject
 {
@@ -19,6 +22,7 @@ public:
     explicit Server(QObject *parent = nullptr);
 
     int      tryLogin(QString name, QString pass);
+    int      tryRegistration(QString name, QString pass, QString checkPass);
 signals:
 
 };

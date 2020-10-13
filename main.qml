@@ -13,13 +13,24 @@ Window {
         onLoginResult: {
             onLogin();
         }
-
         onLoginConnectionError: {
             auth_message("Нет соединения");
         }
-
         onLoginPasswordError: {
             auth_message("Неверный логин или пароль");
+        }
+
+        onRegResult: {
+            reg_message("Ваш аккаунт успешно создан", false);
+        }
+        onRegConnectionError: {
+            reg_message("Нет соединения", true);
+        }
+        onRegPasswordError: {
+            reg_message("Пароли не совпадают", true);
+        }
+        onRegUsernameError: {
+            reg_message("Неверное имя пользователя", true);
         }
     }
 
@@ -30,6 +41,11 @@ Window {
 
     function auth_message(message) {
         authorization.property_message = message;
+    }
+
+    function reg_message(message, warning_flag) {
+        registration.property_message = message;
+        registration.property_warning = warning_flag;
     }
 
     Item {
@@ -120,6 +136,26 @@ Window {
 
         onLoginButtonClicked: {
             app.login(username, password)
+        }
+        onRegistrationButtonClicked: {
+            authorization.state = "State3"
+            registration.state = "State2"
+        }
+    }
+
+    Registration {
+        id: registration
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: parent.width
+
+        onRegButtonClicked: {
+            app.registration(username, password, checkPassword)
+        }
+        onBackButtonClicked: {
+            authorization.state = "State1"
+            registration.state = "State1"
         }
     }
 }

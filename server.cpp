@@ -26,13 +26,49 @@ int Server::tryLogin(QString name, QString pass)
         return 0;
     }
 
-    rec = query.record();
-    if (query.next() && pass == query.value(rec.indexOf("hash")).toString()) {
+    QString passWithSault = pass + name[0];
+    QCryptographicHash CalculateSha512(QCryptographicHash::Sha512);
+    CalculateSha512.addData(passWithSault.toUtf8());
+    QString hash(CalculateSha512.result().toHex());
 
+    rec = query.record();
+    if (query.next() && hash == query.value(rec.indexOf("hash")).toString()) {
         return 1;
     }
     else {
         qDebug() << "Server: Incorrect password: " << pass;
         return 2;
+    }
+}
+
+int Server::tryRegistration(QString name, QString pass, QString checkPass)
+{
+    QSqlQuery query = QSqlQuery(database);
+    QSqlRecord rec;
+
+    if (name == "") {
+        qDebug() << "Server: Incorrect username";
+        return 3;
+    }
+    if (pass != checkPass || pass == "") {
+        qDebug() << "Server: Incorrect password";
+        return 2;
+    }
+
+    QString passWithSault = pass + name[0];
+    QCryptographicHash CalculateSha512(QCryptographicHash::Sha512);
+    CalculateSha512.addData(passWithSault.toUtf8());
+    QString hash(CalculateSha512.result().toHex());
+
+    QString str = "INSERT INTO " + db_name + " (username, hash) "
+                  "VALUES (\'" + name + "\', \'" + hash + "\' );";
+
+    if (!query.exec(str)) {
+        qDebug() << "Server: Unable to make INSERT operation: " << query.lastError();
+        return 0;
+    }
+    else {
+        qDebug() << "Server: Successfully created new account: " << name;
+        return 1;
     }
 }
