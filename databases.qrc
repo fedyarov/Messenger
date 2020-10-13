@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/databases">
+        <file>databases/account_data.sqlite3</file>
+    </qresource>
+</RCC>

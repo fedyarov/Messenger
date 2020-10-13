@@ -6,5 +6,6 @@
         <file>Menu.qml</file>
         <file>Authorization.qml</file>
         <file>EnterText.qml</file>
+        <file>TextButton.qml</file>
     </qresource>
 </RCC>

@@ -13,11 +13,23 @@ Window {
         onLoginResult: {
             onLogin();
         }
+
+        onLoginConnectionError: {
+            auth_message("Нет соединения");
+        }
+
+        onLoginPasswordError: {
+            auth_message("Неверный логин или пароль");
+        }
     }
 
     function onLogin() {
         main_item.state = "State2"
         authorization.state = "State2"
+    }
+
+    function auth_message(message) {
+        authorization.property_message = message;
     }
 
     Item {
@@ -93,8 +105,10 @@ Window {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: 380
+        width: 340
+
         property_windowWidth: parent.width
+        property_account_username: app.username
     }
 
     Authorization {

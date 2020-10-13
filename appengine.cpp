@@ -2,26 +2,39 @@
 
 AppEngine::AppEngine(QObject *parent) : QObject(parent)
 {
-    username = "mfedyarov";
+    server = new Server();
 }
 
 QString AppEngine::get_username() const
 {
-    return username;
+    return m_username;
 }
 
-void AppEngine::set_username(const QString &name)
+void AppEngine::set_username(const QString &a)
 {
-    this->username = name;
+    if (m_username != a) {
+        m_username = a;
+        emit username_changed();
+    }
 }
 
 void AppEngine::login(QString name, QString pass)
 {
-    if (name == username) {
-        qDebug() << "Successfully login";
-        emit loginResult();
+    switch (server->tryLogin(name,pass)){
+    case 0: {
+        emit loginConnectionError();
+        qDebug() << "App: No connection with the server";
+        break;
     }
-    else {
-        qDebug() << "Access denied";
+    case 1: {
+        set_username(name);
+        emit loginResult();
+        qDebug() << "App: Successfully login";
+        break;
+    }
+    case 2: {
+        emit loginPasswordError();
+        break;
+    }
     }
 }
