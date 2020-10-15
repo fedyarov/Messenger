@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "appengine.h"
+#include "contactlist.h"
+#include "contactmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,8 +20,9 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
     AppEngine appEngine;
-
     engine.rootContext()->setContextProperty("app", &appEngine);
+
+    qmlRegisterType<ContactModel>("Contact", 1, 0, "ContactModel");
 
     engine.load(url);
 

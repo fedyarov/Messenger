@@ -1,5 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Layouts 1.12
+
+import Contact 1.0
 
 Window {
     id: win
@@ -31,6 +34,9 @@ Window {
         }
         onRegUsernameError: {
             reg_message("Неверное имя пользователя", true);
+        }
+        onRegUsernameIsTaken: {
+            reg_message("Имя пользователя уже занято", true);
         }
     }
 
@@ -68,13 +74,41 @@ Window {
             }
         }
 
-        Rectangle { // TODO: listView
+        Rectangle {
             id: contact_list
             anchors.top: toolBar.bottom
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             width: toolBar.width
             color: "#ffffff"
+
+            ListView {
+                id: contact_list_ListView
+                anchors.fill: parent
+
+                model: ContactModel {
+                    list: app.getContactList()
+                }
+                clip: true
+
+                delegate:  ContactList_Delegate {
+                    property_usernameText: model.username
+                    property_messageText: model.message
+                }
+            }
+
+            ListModel {
+                id:tableModel
+                ListElement {
+                    username: "kfedyarova"
+                    message: "Привет!"
+                }
+                ListElement {
+                    username: "vbeloryska"
+                    message: "Здравствуйте! У меня к вам очень важный разговор, напишите мне пожалуйста."
+                }
+            }
+
         }
 
         Rectangle {

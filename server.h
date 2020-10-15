@@ -15,14 +15,19 @@
 class Server : public QObject
 {
     Q_OBJECT
+
 private:
     QSqlDatabase database;
     QString      db_name;
+
 public:
     explicit Server(QObject *parent = nullptr);
 
     int      tryLogin(QString name, QString pass);
     int      tryRegistration(QString name, QString pass, QString checkPass);
+
+
+
 signals:
 
 };

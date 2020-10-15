@@ -3,26 +3,34 @@
 
 #include <QObject>
 #include <QDebug>
+
+#include <QList>
+
 #include "server.h"
+#include "contactlist.h"
 
 class AppEngine : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString username READ get_username WRITE set_username NOTIFY username_changed)
+
+    Q_PROPERTY(QString username READ username WRITE setUsername NOTIFY usernameChanged)
+
 private:
-    Server  *server;
-    QString m_username;
+    Server      *server;
+    ContactList *contactList;
+    QString      m_username;
 
 public:
     explicit AppEngine(QObject *parent = nullptr);
 
-    QString  get_username() const;
-    void     set_username(const QString &a);
+    QString      username() const;
+    void         setUsername(const QString &a);
 
     Q_INVOKABLE void login(QString name, QString pass);
     Q_INVOKABLE void registration(QString name, QString pass, QString checkPass);
-public slots:
+    Q_INVOKABLE ContactList* getContactList();
 
+public slots:
 
 signals:
     void loginResult();
@@ -33,8 +41,9 @@ signals:
     void regConnectionError();
     void regPasswordError();
     void regUsernameError();
+    void regUsernameIsTaken();
 
-    void username_changed();
+    void usernameChanged(QString name);
 };
 
 #endif // APPENGINE_H

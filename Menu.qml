@@ -57,6 +57,7 @@ Rectangle {
         height: 40
 
         property_text: "Создать группу"
+        property_image: "qrc:/images/res/createGroup.png"
     }
 
     TextButton {
@@ -67,6 +68,7 @@ Rectangle {
         height: 40
 
         property_text: "Настройки"
+        property_image: "qrc:/images/res/settings.png"
     }
 
     states: [

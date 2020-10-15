@@ -8,5 +8,6 @@
         <file>EnterText.qml</file>
         <file>TextButton.qml</file>
         <file>Registration.qml</file>
+        <file>ContactList_Delegate.qml</file>
     </qresource>
 </RCC>

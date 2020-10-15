@@ -3,6 +3,7 @@
 AppEngine::AppEngine(QObject *parent) : QObject(parent)
 {
     server = new Server();
+    contactList = new ContactList();
 }
 
 void AppEngine::login(QString name, QString pass)
@@ -14,7 +15,7 @@ void AppEngine::login(QString name, QString pass)
         break;
     }
     case 1: {
-        set_username(name);
+        setUsername(name);
         emit loginResult();
         qDebug() << "App: Successfully login";
         break;
@@ -46,18 +47,28 @@ void AppEngine::registration(QString name, QString pass, QString checkPass)
         emit regUsernameError();
         break;
     }
+    case 4: {
+        emit regUsernameIsTaken();
+        break;
+    }
     }
 }
 
-QString AppEngine::get_username() const
+ContactList *AppEngine::getContactList()
+{
+    return contactList;
+}
+
+QString AppEngine::username() const
 {
     return m_username;
 }
 
-void AppEngine::set_username(const QString &a)
+void AppEngine::setUsername(const QString &a)
 {
     if (m_username != a) {
         m_username = a;
-        emit username_changed();
+        emit usernameChanged(m_username);
     }
 }
+

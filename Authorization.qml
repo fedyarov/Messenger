@@ -42,7 +42,7 @@ Rectangle {
 
            property_defaultText: "Имя аккаунта"
            property_maxLength: 16
-           //text: "mfedyarov"
+           text: "mfedyarov"
         }
 
         EnterText {
@@ -56,7 +56,7 @@ Rectangle {
            height: 50
 
            property_defaultText: "Пароль"
-           //text: "123"
+           text: "123"
         }
 
         Text {

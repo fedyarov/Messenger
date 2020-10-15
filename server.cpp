@@ -50,6 +50,17 @@ int Server::tryRegistration(QString name, QString pass, QString checkPass)
         qDebug() << "Server: Incorrect username";
         return 3;
     }
+
+    if (!query.exec("SELECT username FROM " + db_name + " WHERE username=\'" + name + "\'")){
+        qDebug() << "Server: Unable to make SELECT operation: " << query.lastError();
+        return 0;
+    }
+
+    if (query.next()) {
+        qDebug() << "Server: Username is already taken";
+        return 4;
+    }
+
     if (pass != checkPass || pass == "") {
         qDebug() << "Server: Incorrect password";
         return 2;
