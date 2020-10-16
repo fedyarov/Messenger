@@ -1,12 +1,12 @@
-#include "contactmodel.h"
+#include "dialogmodel.h"
 
-ContactModel::ContactModel(QObject *parent)
+DialogModel::DialogModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
 }
 
-int ContactModel::rowCount(const QModelIndex &parent) const
+int DialogModel::rowCount(const QModelIndex &parent) const
 {
     // For list models only the root node (an invalid parent) should return the list's size. For all
     // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
@@ -16,16 +16,16 @@ int ContactModel::rowCount(const QModelIndex &parent) const
     return mList->items().size();
 }
 
-QVariant ContactModel::data(const QModelIndex &index, int role) const
+QVariant DialogModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || !mList)
         return QVariant();
 
-    const ContactItem item = mList->items().at(index.row());
+    const DialogItem item = mList->items().at(index.row());
     switch (role) {
-    case DoneRole:
+    case UsernameRole:
         return QVariant(item.username);
-    case DescriptionRole:
+    case MessageRole:
         return QVariant(item.message);
     case NotifyNewMessageRole:
         return QVariant(item.newMessageFlag);
@@ -34,17 +34,17 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ContactModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool DialogModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!mList)
         return false;
 
-    ContactItem item = mList->items().at(index.row());
+    DialogItem item = mList->items().at(index.row());
     switch (role) {
-    case DoneRole:
+    case UsernameRole:
         item.username = value.toString();
         break;
-    case DescriptionRole:
+    case MessageRole:
         item.message = value.toString();
         break;
     case NotifyNewMessageRole:
@@ -60,7 +60,7 @@ bool ContactModel::setData(const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-Qt::ItemFlags ContactModel::flags(const QModelIndex &index) const
+Qt::ItemFlags DialogModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -68,22 +68,22 @@ Qt::ItemFlags ContactModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable;
 }
 
-QHash<int, QByteArray> ContactModel::roleNames() const
+QHash<int, QByteArray> DialogModel::roleNames() const
 {
     QHash<int, QByteArray> names;
-    names[DoneRole] = "username";
-    names[DescriptionRole] = "message";
+    names[UsernameRole] = "username";
+    names[MessageRole] = "message";
     names[NotifyNewMessageRole] = "newMessageFlag";
     return names;
 }
 
-ContactList* ContactModel::list() const
+DialogList* DialogModel::list() const
 {
     qDebug() << "list()";
     return mList;
 }
 
-void ContactModel::setList(ContactList *list)
+void DialogModel::setList(DialogList *list)
 {
     beginResetModel();
 
@@ -93,29 +93,29 @@ void ContactModel::setList(ContactList *list)
     mList = list;
 
     if (mList) {
-        connect(mList, &ContactList::preItemAppended, this, [=](){
+        connect(mList, &DialogList::preItemAppended, this, [=](){
             const int index = mList->items().size();
             beginInsertRows(QModelIndex(), index, index);
         });
-        connect(mList, &ContactList::preItemAppended, this, [=](){
+        connect(mList, &DialogList::preItemAppended, this, [=](){
             endInsertRows();
         });
-        connect(mList, &ContactList::preItemRemoved, this, [=](int index){
+        connect(mList, &DialogList::preItemRemoved, this, [=](int index){
             beginRemoveRows(QModelIndex(), index, index);
         });
-        connect(mList, &ContactList::postItemRemoved, this, [=](){
+        connect(mList, &DialogList::postItemRemoved, this, [=](){
             endInsertRows();
         });
-        connect(mList, &ContactList::preItemMoveRows, this, [=](int indexSourceFirst, int indexSourceLast, int indexDestRow){
+        connect(mList, &DialogList::preItemMoveRows, this, [=](int indexSourceFirst, int indexSourceLast, int indexDestRow){
             beginMoveRows(QModelIndex(), indexSourceFirst, indexSourceLast, QModelIndex(), indexDestRow);
         });
-        connect(mList, &ContactList::postItemMoveRows, this, [=](){
+        connect(mList, &DialogList::postItemMoveRows, this, [=](){
             endMoveRows();
         });
-        connect(mList, &ContactList::preResetModel, this, [=](){
+        connect(mList, &DialogList::preResetModel, this, [=](){
             beginResetModel();
         });
-        connect(mList, &ContactList::postResetModel, this, [=](){
+        connect(mList, &DialogList::postResetModel, this, [=](){
             endResetModel();
         });
     }

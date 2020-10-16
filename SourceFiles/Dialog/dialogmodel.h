@@ -1,23 +1,23 @@
-#ifndef CONTACT_H
-#define CONTACT_H
+#ifndef DIALOGMODEL_H
+#define DIALOGMODEL_H
 
 #include <QAbstractListModel>
 #include <QDebug>
 
-#include "contactlist.h"
+#include "dialoglist.h"
 
-class ContactList;
+class DialogList;
 
-class ContactModel : public QAbstractListModel
+class DialogModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(ContactList* list READ list WRITE setList)
+    Q_PROPERTY(DialogList* list READ list WRITE setList)
 public:
-    explicit ContactModel(QObject *parent = nullptr);
+    explicit DialogModel(QObject *parent = nullptr);
 
     enum {
-        DoneRole = Qt::UserRole,
-        DescriptionRole,
+        UsernameRole = Qt::UserRole,
+        MessageRole,
         NotifyNewMessageRole,
     };
 
@@ -34,11 +34,11 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    ContactList* list() const;
-    void setList(ContactList *list);
+    DialogList* list() const;
+    void setList(DialogList *list);
 
 private:
-    ContactList *mList;
+    DialogList *mList;
 };
 
-#endif // CONTACT_H
+#endif // DIALOGMODEL_H

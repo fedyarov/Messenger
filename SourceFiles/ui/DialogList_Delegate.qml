@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Rectangle {
-    id: contactList_delegate
+    id: dialogList_delegate
     property string property_usernameText
     property string property_messageText
     property bool   property_newMessage
@@ -71,7 +71,7 @@ Rectangle {
         }
         onReleased: {
             rectangle.opacity = 0.05
-            contactList_delegate.contactClicked()
+            dialogList_delegate.contactClicked()
         }
     }
 }

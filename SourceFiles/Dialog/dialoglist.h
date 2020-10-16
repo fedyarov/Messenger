@@ -1,26 +1,30 @@
-#ifndef CONTACTLIST_H
-#define CONTACTLIST_H
+#ifndef DIALOGLIST_H
+#define DIALOGLIST_H
 
 #include <QObject>
 #include <QList>
 #include <QDebug>
 
-struct ContactItem
+struct MessageItem{
+
+};
+
+struct DialogItem
 {
     QString username;
     QString message;
     bool    newMessageFlag;
 };
 
-class ContactList : public QObject
+class DialogList : public QObject
 {
     Q_OBJECT
 public:
-    explicit ContactList(QObject *parent = nullptr);
+    explicit DialogList(QObject *parent = nullptr);
 
-    QList<ContactItem> items() const;
+    QList<DialogItem> items() const;
 
-    bool setItemAt(int index, const ContactItem &item);
+    bool setItemAt(int index, const DialogItem &item);
     bool moveRowToFirst(int indexSource);
     bool setNewMessageFlag(int index, bool flag);
 
@@ -41,8 +45,8 @@ public slots:
     void appendItem(QString name, QString msg);
 
 private:
-    QList<ContactItem> mItems;
+    QList<DialogItem> mItems;
 
 };
 
-#endif // CONTACTLIST_H
+#endif // DIALOGLIST_H

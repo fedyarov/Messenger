@@ -7,7 +7,7 @@
 #include <QList>
 
 #include "server.h"
-#include "contactlist.h"
+#include "Dialog/dialoglist.h"
 
 class AppEngine : public QObject
 {
@@ -16,9 +16,9 @@ class AppEngine : public QObject
     Q_PROPERTY(QString username READ username WRITE setUsername NOTIFY usernameChanged)
 
 private:
-    Server      *server;
-    ContactList *contactList;
-    QString      m_username;
+    Server     *server;
+    DialogList *dialogList;
+    QString     m_username;
 
 public:
     explicit AppEngine(QObject *parent = nullptr);
@@ -28,7 +28,7 @@ public:
 
     Q_INVOKABLE void         login(QString name, QString pass);
     Q_INVOKABLE void         registration(QString name, QString pass, QString checkPass);
-    Q_INVOKABLE ContactList* getContactList();
+    Q_INVOKABLE DialogList  *getDialogList();
     Q_INVOKABLE void         setItemToFirst();
     Q_INVOKABLE void         openDialog(int index);
 

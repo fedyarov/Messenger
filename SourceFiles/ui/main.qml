@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 
-import Contact 1.0
+import Dialog 1.0
 
 Window {
     id: win
@@ -87,12 +87,12 @@ Window {
                 id: contact_list_ListView
                 anchors.fill: parent
 
-                model: ContactModel {
-                    list: app.getContactList()
+                model: DialogModel {
+                    list: app.getDialogList()
                 }
                 clip: true
 
-                delegate:  ContactList_Delegate {
+                delegate:  DialogList_Delegate {
                     property_usernameText: model.username
                     property_messageText: model.message
                     property_newMessage: model.newMessageFlag

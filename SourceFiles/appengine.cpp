@@ -3,7 +3,7 @@
 AppEngine::AppEngine(QObject *parent) : QObject(parent)
 {
     server = new Server();
-    contactList = new ContactList();
+    dialogList = new DialogList();
 }
 
 void AppEngine::login(QString name, QString pass)
@@ -54,19 +54,19 @@ void AppEngine::registration(QString name, QString pass, QString checkPass)
     }
 }
 
-ContactList *AppEngine::getContactList()
+DialogList *AppEngine::getDialogList()
 {
-    return contactList;
+    return dialogList;
 }
 
 void AppEngine::setItemToFirst()
 {
-    contactList->moveRowToFirst(5);
+    dialogList->moveRowToFirst(5);
 }
 
 void AppEngine::openDialog(int index)
 {
-    contactList->setNewMessageFlag(index, false);
+    dialogList->setNewMessageFlag(index, false);
 }
 
 QString AppEngine::username() const

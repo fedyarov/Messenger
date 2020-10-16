@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>ToolBar.qml</file>
-        <file>IconButton.qml</file>
-        <file>Menu.qml</file>
-        <file>Authorization.qml</file>
-        <file>EnterText.qml</file>
-        <file>TextButton.qml</file>
-        <file>Registration.qml</file>
-        <file>ContactList_Delegate.qml</file>
+        <file>SourceFiles/ui/main.qml</file>
+        <file>SourceFiles/ui/Authorization.qml</file>
+        <file>SourceFiles/ui/DialogList_Delegate.qml</file>
+        <file>SourceFiles/ui/Menu.qml</file>
+        <file>SourceFiles/ui/Registration.qml</file>
+        <file>SourceFiles/ui/ToolBar.qml</file>
+        <file>SourceFiles/ui/EnterText.qml</file>
+        <file>SourceFiles/ui/IconButton.qml</file>
+        <file>SourceFiles/ui/TextButton.qml</file>
     </qresource>
 </RCC>

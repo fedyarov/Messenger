@@ -2,8 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "appengine.h"
-#include "contactlist.h"
-#include "contactmodel.h"
+#include "Dialog/dialogmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +11,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    const QUrl url(QStringLiteral("qrc:/SourceFiles/ui/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
@@ -22,7 +21,7 @@ int main(int argc, char *argv[])
     AppEngine appEngine;
     engine.rootContext()->setContextProperty("app", &appEngine);
 
-    qmlRegisterType<ContactModel>("Contact", 1, 0, "ContactModel");
+    qmlRegisterType<DialogModel>("Dialog", 1, 0, "DialogModel");
 
     engine.load(url);
 
