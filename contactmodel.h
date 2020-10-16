@@ -17,7 +17,8 @@ public:
 
     enum {
         DoneRole = Qt::UserRole,
-        DescriptionRole
+        DescriptionRole,
+        NotifyNewMessageRole,
     };
 
     // Basic functionality:

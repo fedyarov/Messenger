@@ -59,6 +59,16 @@ ContactList *AppEngine::getContactList()
     return contactList;
 }
 
+void AppEngine::setItemToFirst()
+{
+    contactList->moveRowToFirst(5);
+}
+
+void AppEngine::openDialog(int index)
+{
+    contactList->setNewMessageFlag(index, false);
+}
+
 QString AppEngine::username() const
 {
     return m_username;

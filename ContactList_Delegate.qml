@@ -4,18 +4,22 @@ Rectangle {
     id: contactList_delegate
     property string property_usernameText
     property string property_messageText
+    property bool   property_newMessage
 
     signal contactClicked();
 
-    height: 80
+    height: 70
     width: parent.width
 
     Text {
         id: username
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.right: parent.right
         anchors.topMargin: 10
         anchors.leftMargin: 60
+        anchors.rightMargin: 10
+        elide: Text.ElideRight
 
         text: property_usernameText
         color: "#000000"
@@ -23,14 +27,31 @@ Rectangle {
     }
     Text {
         id: message
-        anchors.top: username.bottom
+        anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.topMargin: 10
+        anchors.right: notice.left
+        anchors.bottomMargin: 10
         anchors.leftMargin: 60
+        anchors.rightMargin: 10
+        elide: Text.ElideRight
 
         text: property_messageText
         color: "#a3a3a3"
         font.pointSize: 10
+    }
+    Rectangle {
+        id: notice
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.bottomMargin: 10
+        anchors.rightMargin: 10
+
+        width: 20
+        height: 20
+        radius: width/2
+        color: "#00c4ff"
+        smooth: true
+        visible: property_newMessage
     }
 
     Rectangle {

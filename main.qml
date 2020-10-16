@@ -70,7 +70,8 @@ Window {
             width: parent.width/3
 
             onMenu_button_clicked: {
-                menu.state = "State2"
+                //menu.state = "State2"
+                app.setItemToFirst();
             }
         }
 
@@ -94,21 +95,13 @@ Window {
                 delegate:  ContactList_Delegate {
                     property_usernameText: model.username
                     property_messageText: model.message
+                    property_newMessage: model.newMessageFlag
+
+                    onContactClicked: {
+                        app.openDialog(index)
+                    }
                 }
             }
-
-            ListModel {
-                id:tableModel
-                ListElement {
-                    username: "kfedyarova"
-                    message: "Привет!"
-                }
-                ListElement {
-                    username: "vbeloryska"
-                    message: "Здравствуйте! У меня к вам очень важный разговор, напишите мне пожалуйста."
-                }
-            }
-
         }
 
         Rectangle {

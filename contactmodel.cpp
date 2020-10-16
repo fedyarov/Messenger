@@ -27,6 +27,8 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
         return QVariant(item.username);
     case DescriptionRole:
         return QVariant(item.message);
+    case NotifyNewMessageRole:
+        return QVariant(item.newMessageFlag);
     }
 
     return QVariant();
@@ -44,6 +46,9 @@ bool ContactModel::setData(const QModelIndex &index, const QVariant &value, int 
         break;
     case DescriptionRole:
         item.message = value.toString();
+        break;
+    case NotifyNewMessageRole:
+        item.newMessageFlag = value.toBool();
         break;
     }
 
@@ -68,6 +73,7 @@ QHash<int, QByteArray> ContactModel::roleNames() const
     QHash<int, QByteArray> names;
     names[DoneRole] = "username";
     names[DescriptionRole] = "message";
+    names[NotifyNewMessageRole] = "newMessageFlag";
     return names;
 }
 
@@ -99,6 +105,18 @@ void ContactModel::setList(ContactList *list)
         });
         connect(mList, &ContactList::postItemRemoved, this, [=](){
             endInsertRows();
+        });
+        connect(mList, &ContactList::preItemMoveRows, this, [=](int indexSourceFirst, int indexSourceLast, int indexDestRow){
+            beginMoveRows(QModelIndex(), indexSourceFirst, indexSourceLast, QModelIndex(), indexDestRow);
+        });
+        connect(mList, &ContactList::postItemMoveRows, this, [=](){
+            endMoveRows();
+        });
+        connect(mList, &ContactList::preResetModel, this, [=](){
+            beginResetModel();
+        });
+        connect(mList, &ContactList::postResetModel, this, [=](){
+            endResetModel();
         });
     }
 

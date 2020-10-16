@@ -133,7 +133,7 @@ Rectangle {
                 target: registration
                 properties: "anchors.leftMargin"
                 easing.type: Easing.InCirc
-                duration: 150
+                duration: 300
             }
         }
     ]

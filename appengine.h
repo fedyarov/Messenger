@@ -23,12 +23,14 @@ private:
 public:
     explicit AppEngine(QObject *parent = nullptr);
 
-    QString      username() const;
-    void         setUsername(const QString &a);
+    QString  username() const;
+    void     setUsername(const QString &a);
 
-    Q_INVOKABLE void login(QString name, QString pass);
-    Q_INVOKABLE void registration(QString name, QString pass, QString checkPass);
+    Q_INVOKABLE void         login(QString name, QString pass);
+    Q_INVOKABLE void         registration(QString name, QString pass, QString checkPass);
     Q_INVOKABLE ContactList* getContactList();
+    Q_INVOKABLE void         setItemToFirst();
+    Q_INVOKABLE void         openDialog(int index);
 
 public slots:
 

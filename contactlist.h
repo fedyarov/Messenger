@@ -2,12 +2,14 @@
 #define CONTACTLIST_H
 
 #include <QObject>
-#include <QVector>
+#include <QList>
+#include <QDebug>
 
 struct ContactItem
 {
     QString username;
     QString message;
+    bool    newMessageFlag;
 };
 
 class ContactList : public QObject
@@ -16,9 +18,11 @@ class ContactList : public QObject
 public:
     explicit ContactList(QObject *parent = nullptr);
 
-    QVector<ContactItem> items() const;
+    QList<ContactItem> items() const;
 
     bool setItemAt(int index, const ContactItem &item);
+    bool moveRowToFirst(int indexSource);
+    bool setNewMessageFlag(int index, bool flag);
 
 signals:
     void preItemAppended();
@@ -27,11 +31,17 @@ signals:
     void preItemRemoved(int index);
     void postItemRemoved();
 
+    void preItemMoveRows(int indexSourceFirst, int indexSourceLast, int indexDestRow);
+    void postItemMoveRows();
+
+    void preResetModel();
+    void postResetModel();
+
 public slots:
     void appendItem(QString name, QString msg);
 
 private:
-    QVector<ContactItem> mItems;
+    QList<ContactItem> mItems;
 
 };
 
