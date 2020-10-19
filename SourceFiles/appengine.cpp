@@ -64,9 +64,10 @@ void AppEngine::setItemToFirst()
     dialogList->moveRowToFirst(5);
 }
 
-void AppEngine::openDialog(int index)
+QList<MessageItem> AppEngine::openDialog(int index)
 {
     dialogList->setNewMessageFlag(index, false);
+    return dialogList->messageItems(index);
 }
 
 QString AppEngine::username() const

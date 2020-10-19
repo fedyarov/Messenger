@@ -26,11 +26,11 @@ public:
     QString  username() const;
     void     setUsername(const QString &a);
 
-    Q_INVOKABLE void         login(QString name, QString pass);
-    Q_INVOKABLE void         registration(QString name, QString pass, QString checkPass);
-    Q_INVOKABLE DialogList  *getDialogList();
-    Q_INVOKABLE void         setItemToFirst();
-    Q_INVOKABLE void         openDialog(int index);
+    Q_INVOKABLE void               login(QString name, QString pass);
+    Q_INVOKABLE void               registration(QString name, QString pass, QString checkPass);
+    Q_INVOKABLE DialogList         *getDialogList();
+    Q_INVOKABLE void               setItemToFirst();
+    Q_INVOKABLE QList<MessageItem> openDialog(int index);
 
 public slots:
 

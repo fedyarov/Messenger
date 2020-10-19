@@ -5,15 +5,30 @@
 #include <QList>
 #include <QDebug>
 
-struct MessageItem{
+class MessageItem{
+public:
+    QString message;
+    QString date;
+    bool    fromClient;
+
+public:
+    MessageItem() {};
+    MessageItem(QString msg, QString msgDate, bool flagFromClient)
+        : message(msg), date(msgDate), fromClient(flagFromClient) {}
 
 };
 
-struct DialogItem
+class DialogItem
 {
-    QString username;
-    QString message;
-    bool    newMessageFlag;
+public:
+    QString  username;
+    QVariant messageList;
+    bool     newMessageFlag;
+
+public:
+    DialogItem() {};
+    DialogItem(QString name, QVariant msgList, bool newMsgFlag)
+        : username(name), messageList(msgList), newMessageFlag(newMsgFlag) {}
 };
 
 class DialogList : public QObject
@@ -22,7 +37,8 @@ class DialogList : public QObject
 public:
     explicit DialogList(QObject *parent = nullptr);
 
-    QList<DialogItem> items() const;
+    QList<DialogItem>  items() const;
+    QList<MessageItem> messageItems(int index) const;
 
     bool setItemAt(int index, const DialogItem &item);
     bool moveRowToFirst(int indexSource);
@@ -42,11 +58,14 @@ signals:
     void postResetModel();
 
 public slots:
-    void appendItem(QString name, QString msg);
+    void appendItem(QString name, QVariant msgList, bool newMsgFlag);
 
 private:
     QList<DialogItem> mItems;
 
 };
+
+Q_DECLARE_METATYPE(DialogItem)
+Q_DECLARE_METATYPE(MessageItem)
 
 #endif // DIALOGLIST_H

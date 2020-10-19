@@ -9,5 +9,8 @@
         <file>SourceFiles/ui/EnterText.qml</file>
         <file>SourceFiles/ui/IconButton.qml</file>
         <file>SourceFiles/ui/TextButton.qml</file>
+        <file>SourceFiles/ui/MessageList_Delegate.qml</file>
+        <file>SourceFiles/ui/MessageToolBar.qml</file>
+        <file>SourceFiles/ui/MessageTextEdit.qml</file>
     </qresource>
 </RCC>

@@ -6,7 +6,7 @@ Rectangle {
     property string property_messageText
     property bool   property_newMessage
 
-    signal contactClicked();
+    signal contactClicked(string name)
 
     height: 70
     width: parent.width
@@ -71,7 +71,7 @@ Rectangle {
         }
         onReleased: {
             rectangle.opacity = 0.05
-            dialogList_delegate.contactClicked()
+            dialogList_delegate.contactClicked(username.text)
         }
     }
 }

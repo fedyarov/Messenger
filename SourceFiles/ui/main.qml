@@ -2,7 +2,8 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 
-import Dialog 1.0
+import DialogModel 1.0
+import MessageModel 1.0
 
 Window {
     id: win
@@ -54,12 +55,23 @@ Window {
         registration.property_warning = warning_flag;
     }
 
+    function displayDialog(username){
+        msgToolBar.property_companionUsername = username
+        msgToolBar.color = "#ffffff"
+        //msgTextEdit.color = "#ffffff"
+    }
+
+    /* main_item contains toolbar where are located:
+     *  - Menu button which displays the menu when pressed,
+     *  - Search through which you can find another user
+     * Also contactList with ListView which displays all user dialogs.
+     * When user clicked at contact, app displays
+     * all messages in the conversation.
+     * And dialog_item with messages */
+
     Item {
         id: main_item
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
         state: "State1"
 
         ToolBar {
@@ -70,47 +82,114 @@ Window {
             width: parent.width/3
 
             onMenu_button_clicked: {
-                //menu.state = "State2"
-                app.setItemToFirst();
+                menu.state = "State2"
             }
         }
 
         Rectangle {
-            id: contact_list
+            id: contactList
             anchors.top: toolBar.bottom
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             width: toolBar.width
-            color: "#ffffff"
 
             ListView {
-                id: contact_list_ListView
+                id: contactList_ListView
                 anchors.fill: parent
 
-                model: DialogModel {
-                    list: app.getDialogList()
-                }
                 clip: true
 
+                model: DialogModel {
+                    id: dialogModel
+                    list: app.getDialogList()
+                }
+
                 delegate:  DialogList_Delegate {
+                    id: dlgList_Delegate
                     property_usernameText: model.username
-                    property_messageText: model.message
+                    property_messageText: model.lastMessage
                     property_newMessage: model.newMessageFlag
 
+                    Component.onCompleted: {
+                        contactClicked.connect(win.displayDialog)
+                    }
                     onContactClicked: {
-                        app.openDialog(index)
+                        messageModel.list = app.openDialog(index)
                     }
                 }
             }
         }
 
-        Rectangle {
-            id: dialog
+
+        /* dialog_item contains:
+         * - toolbar with buttons for dialog,
+         * - all messages between two users,
+         * - textEdit when user can write your own message and send it. */
+
+        Item {
+           id: dialog_item
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: toolBar.right
             anchors.right: parent.right
-            color: "#dedede"
+
+            MessageToolBar{
+                id: msgToolBar
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: toolBar.height
+                color: dialog.color
+            }
+
+            Rectangle {
+                id: dialog
+                anchors.top: msgToolBar.bottom
+                anchors.bottom: msgTextEdit.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                color: "#dedede"
+
+                ListView {
+                    id: dialogList_ListView
+                    anchors.fill: parent
+                    anchors.topMargin: 5
+                    anchors.bottomMargin: 5
+                    clip: true
+                    spacing: 5
+
+                    model: MessageModel {
+                        id: messageModel
+                    }
+
+                    delegate: MessageList_Delegate {
+                        id: message_rect
+
+                        property_message: model.message
+                        property_date: model.date
+                        property_fromClient: model.fromClient
+                    }
+                }
+            }
+
+            MessageTextEdit {
+                id: msgTextEdit
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+
+                property_maxHeight: win.height/2
+            }
+        }
+
+        // Line separator
+        Rectangle {
+            id: separator
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.left: toolBar.right
+            width: 2
+            color: dialog.color
         }
 
         states: [

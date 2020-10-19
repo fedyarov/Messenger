@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include "appengine.h"
 #include "Dialog/dialogmodel.h"
+#include "Dialog/messagemodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +22,8 @@ int main(int argc, char *argv[])
     AppEngine appEngine;
     engine.rootContext()->setContextProperty("app", &appEngine);
 
-    qmlRegisterType<DialogModel>("Dialog", 1, 0, "DialogModel");
+    qmlRegisterType<DialogModel>("DialogModel", 1, 0, "DialogModel");
+    qmlRegisterType<MessageModel>("MessageModel", 1,0, "MessageModel");
 
     engine.load(url);
 

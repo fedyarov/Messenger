@@ -25,8 +25,10 @@ QVariant DialogModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case UsernameRole:
         return QVariant(item.username);
-    case MessageRole:
-        return QVariant(item.message);
+    case MessageListRole:
+        return QVariant(item.messageList);
+    case LastMessage:
+        return QVariant(item.messageList.value<QList<MessageItem>>().last().message);
     case NotifyNewMessageRole:
         return QVariant(item.newMessageFlag);
     }
@@ -44,8 +46,10 @@ bool DialogModel::setData(const QModelIndex &index, const QVariant &value, int r
     case UsernameRole:
         item.username = value.toString();
         break;
-    case MessageRole:
-        item.message = value.toString();
+    case MessageListRole:
+        item.messageList = value.toList();
+        break;
+    case LastMessage:
         break;
     case NotifyNewMessageRole:
         item.newMessageFlag = value.toBool();
@@ -72,7 +76,8 @@ QHash<int, QByteArray> DialogModel::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[UsernameRole] = "username";
-    names[MessageRole] = "message";
+    names[MessageListRole] = "messageList";
+    names[LastMessage] = "lastMessage";
     names[NotifyNewMessageRole] = "newMessageFlag";
     return names;
 }

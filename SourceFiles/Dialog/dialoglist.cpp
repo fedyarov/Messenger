@@ -2,25 +2,40 @@
 
 DialogList::DialogList(QObject *parent) : QObject(parent)
 {
-    QVector<QString> tempVector, tempVector2, tempVector3;
+    MessageItem tempMessage1("Привет","0:46", true);
+    MessageItem tempMessage2("Здарова","0:46", false);
+    MessageItem tempMessage3("У меня к вам деловое предложение","0:48", true);
+    MessageItem tempMessage4("У нас было два пакетика травы, семьдесят пять ампул мескалина, "
+                             "5 пакетиков диэтиламида лизергиновой кислоты или ЛСД, солонка, "
+                             "наполовину наполненная кокаином, и целое море разноцветных амфетаминов, "
+                             "барбитуратов и транквилизаторов, а так же литр текилы, литр рома, ящик "
+                             "«Бадвайзера», пинта чистого эфира, и 12 пузырьков амилнитрита. Не то, "
+                             "чтобы всё это было категорически необходимо в поездке, но если уж "
+                             "начал собирать коллекцию, то к делу надо подходить серьёзно."
+                             ,"0:48", true);
 
-    tempVector << "Привет" << "Здравствуйте" << "У меня для вас деловое предложение";
-    tempVector2 << "Я не буду с вами разговаривать";
-    tempVector3 << "Хорошо, буду ждать" << "Ну и жди";
+    QList<MessageItem> tempList1, tempList2, tempList3;
+    tempList1 << tempMessage1;
+    tempList2 << tempMessage1 << tempMessage2;
+    tempList3 << tempMessage1 << tempMessage2 << tempMessage3 << tempMessage4;
 
-    mItems.append({ "kfedyarova", tempVector[2], false});
-    mItems.append({ "vbelorysska", tempVector2[0], true});
-    mItems.append({ "mderbedenev", tempVector3[0], false});
-    mItems.append({ "user1", tempVector[2], false});
-    mItems.append({ "user2", tempVector2[0], false});
-    mItems.append({ "user3", tempVector3[0], false});
-    mItems.append({ "user4", tempVector[2], false});
-    mItems.append({ "user5", tempVector2[0], false});
+    QVariant variant1 = QVariant::fromValue<QList<MessageItem>>(tempList1);
+    QVariant variant2 = QVariant::fromValue<QList<MessageItem>>(tempList2);
+    QVariant variant3 = QVariant::fromValue<QList<MessageItem>>(tempList3);
+
+    mItems.append({"kfedyarova", variant1, false});
+    mItems.append({ "vbelorysska", variant2, false});
+    mItems.append({ "mderbedenev", variant3, false});
 }
 
 QList<DialogItem> DialogList::items() const
 {
     return mItems;
+}
+
+QList<MessageItem> DialogList::messageItems(int index) const
+{
+    return mItems.at(index).messageList.value<QList<MessageItem>>();
 }
 
 bool DialogList::setItemAt(int index, const DialogItem &item)
@@ -29,7 +44,7 @@ bool DialogList::setItemAt(int index, const DialogItem &item)
         return false;
 
     const DialogItem &oldItem = mItems.at(index);
-    if (item.username == oldItem.username && item.message == oldItem.message )
+    if (item.username == oldItem.username && item.messageList == oldItem.messageList )
         return false;
 
     mItems[index] = item;
@@ -66,11 +81,11 @@ bool DialogList::setNewMessageFlag(int index, bool flag)
     return true;
 }
 
-void DialogList::appendItem(QString name, QString msg) // TODO: newMessageFlag set
+void DialogList::appendItem(QString name, QVariant msgList, bool newMsgFlag) // TODO: newMessageFlag set
 {
     emit preItemAppended();
 
-    DialogItem item;
+    DialogItem item(name, msgList, newMsgFlag);
     mItems.append(item);
 
     emit postItemAppended();

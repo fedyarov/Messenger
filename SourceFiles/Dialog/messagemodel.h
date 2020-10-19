@@ -1,25 +1,23 @@
-#ifndef DIALOGMODEL_H
-#define DIALOGMODEL_H
+#ifndef MESSAGEMODEL_H
+#define MESSAGEMODEL_H
 
 #include <QAbstractListModel>
-#include <QDebug>
-
 #include "dialoglist.h"
 
-class DialogList;
+class MessageItem;
 
-class DialogModel : public QAbstractListModel
+class MessageModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(DialogList* list READ list WRITE setList)
+    Q_PROPERTY(QList<MessageItem> list READ list WRITE setList)
+
 public:
-    explicit DialogModel(QObject *parent = nullptr);
+    explicit MessageModel(QObject *parent = nullptr);
 
     enum {
-        UsernameRole = Qt::UserRole,
-        MessageListRole,
-        LastMessage,
-        NotifyNewMessageRole,
+        MessageRole = Qt::UserRole,
+        DateRole,
+        FromClientRole
     };
 
     // Basic functionality:
@@ -35,11 +33,11 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    DialogList* list() const;
-    void setList(DialogList *list);
+    QList<MessageItem> list() const;
+    void               setList(QList<MessageItem> list);
 
 private:
-    DialogList *mList;
+    QList<MessageItem> mList;
 };
 
-#endif // DIALOGMODEL_H
+#endif // MESSAGEMODEL_H

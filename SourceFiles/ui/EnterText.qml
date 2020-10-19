@@ -23,7 +23,9 @@ Item {
            anchors.right: parent.right
            anchors.leftMargin: 20
            anchors.rightMargin: 20
+
            font.pointSize: 10
+           selectByMouse: true
 
            maximumLength: property_maxLength
         }
