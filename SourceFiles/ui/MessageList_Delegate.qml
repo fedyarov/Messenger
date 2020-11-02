@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: messageList_delegate
@@ -18,12 +19,14 @@ Rectangle {
     radius: 3
     smooth: true
 
+
     Text {
         id: message_Text
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
         wrapMode: Text.WordWrap
+        width: contentWidth > 500 ? 500 : contentWidth
 
         text: property_message
         font.pointSize: 10

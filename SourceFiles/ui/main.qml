@@ -58,7 +58,7 @@ Window {
     function displayDialog(username){
         msgToolBar.property_companionUsername = username
         msgToolBar.color = "#ffffff"
-        //msgTextEdit.color = "#ffffff"
+        msgTextEdit.property_visible = true
     }
 
     /* main_item contains toolbar where are located:
@@ -149,6 +149,10 @@ Window {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: "#dedede"
+                Image {
+                    source: "qrc:/images/res/background.jpg"
+                    opacity: 0.05
+                }
 
                 ListView {
                     id: dialogList_ListView
@@ -179,6 +183,7 @@ Window {
                 anchors.bottom: parent.bottom
 
                 property_maxHeight: win.height/2
+                property_visible: false
             }
         }
 

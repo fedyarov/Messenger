@@ -3,5 +3,7 @@
         <file>res/menu.png</file>
         <file>res/settings.png</file>
         <file>res/createGroup.png</file>
+        <file>res/send.png</file>
+        <file>res/background.jpg</file>
     </qresource>
 </RCC>

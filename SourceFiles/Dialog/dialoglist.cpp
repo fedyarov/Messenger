@@ -3,15 +3,16 @@
 DialogList::DialogList(QObject *parent) : QObject(parent)
 {
     MessageItem tempMessage1("Привет","0:46", true);
-    MessageItem tempMessage2("Здарова","0:46", false);
-    MessageItem tempMessage3("У меня к вам деловое предложение","0:48", true);
-    MessageItem tempMessage4("У нас было два пакетика травы, семьдесят пять ампул мескалина, "
-                             "5 пакетиков диэтиламида лизергиновой кислоты или ЛСД, солонка, "
-                             "наполовину наполненная кокаином, и целое море разноцветных амфетаминов, "
-                             "барбитуратов и транквилизаторов, а так же литр текилы, литр рома, ящик "
-                             "«Бадвайзера», пинта чистого эфира, и 12 пузырьков амилнитрита. Не то, "
-                             "чтобы всё это было категорически необходимо в поездке, но если уж "
-                             "начал собирать коллекцию, то к делу надо подходить серьёзно."
+    MessageItem tempMessage2("Добрый день!","0:46", false);
+    MessageItem tempMessage3("Хочу сообщить вам важную информацию","0:48", true);
+    MessageItem tempMessage4("Полосатые мангусты очень легко приручаются и часто "
+                             "живут не просто рядом с людьми, но и в их домах. Эти "
+                             "зверьки не хуже кошек ловят грызунов, а кроме того, "
+                             "истребляют насекомых и паукообразных, защищая жилища от "
+                             "непрошенных гостей. "
+                             "Подобно кошкам, мангусты больше привязываются к дому, чем "
+                             "к людям, однако могут выражать привязанность к конкретному "
+                             "человеку следуя за ним, залезая на колени и позволяя себя гладить."
                              ,"0:48", true);
 
     QList<MessageItem> tempList1, tempList2, tempList3;
@@ -23,9 +24,9 @@ DialogList::DialogList(QObject *parent) : QObject(parent)
     QVariant variant2 = QVariant::fromValue<QList<MessageItem>>(tempList2);
     QVariant variant3 = QVariant::fromValue<QList<MessageItem>>(tempList3);
 
-    mItems.append({"kfedyarova", variant1, false});
-    mItems.append({ "vbelorysska", variant2, false});
-    mItems.append({ "mderbedenev", variant3, false});
+    mItems.append({ "user1", variant1, false});
+    mItems.append({ "user2", variant2, false});
+    mItems.append({ "user3", variant3, false});
 }
 
 QList<DialogItem> DialogList::items() const
